@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#convert").click(function(){
+    	var wholeNumber = $("#wn").val();
+        /*$.get("/convert?whole-number="+wholeNumber, function(data){
+        	$("#roman-number").css("display","inline").text(data);
+        }).fail(function(data) {
+        	alert("Data: " + data);
+        });*/
+
+          $.ajax({
+          	method: "GET",
+          	url: "/convert?whole-number="+wholeNumber,
+              success: function(data){
+              	$("#result").css("display","inline").text("Roman Number: " + data.romanNumber);
+              },
+              error: function(xhr, status, error) {
+              	//alert("An AJAX error occured: " + status + "\nError: " + error + "\nError detail: " + xhr.responseText);
+              	$("#result").css("display","inline").text("Error: " + xhr.responseText);
+              }
+          });
+    });
+    
+
+});
+</script>
+</head>
+
+<body>
+	<div>
+		Number: <input id="wn" type="text" name="WholeNumber" placeholder="Enter a whole number"> 
+		<input id="convert" type="button" value="Submit"><br>
+		<p id="result" style="display:none;"></p>
+	</div>
+</body>
+</html>
